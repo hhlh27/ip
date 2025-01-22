@@ -3,7 +3,7 @@ import java.util.Scanner;
 
 public class DazAI {
     public static void main(String[] args) {
-        ArrayList<String> tasks = new ArrayList<>();
+        ArrayList<Task> tasks = new ArrayList<>();
         Scanner scanner = new java.util.Scanner(System.in);
         String logo = "  ____                    ___    _____ \n"
                 + " |  _ \\  __ _  _____     / _\\   |__  _|\n"
@@ -11,7 +11,7 @@ public class DazAI {
                 + " | |_| | (_| |  / /_   /  --- \\   | | \n"
                 + " |____/ \\__,_| |__,_| //       \\\\|____|  \n";
 
-        
+
         // Print greeting message
         System.out.println("____________________________________________________________");
         System.out.println(" Hello from\n" + logo);
@@ -34,13 +34,57 @@ public class DazAI {
                     }
                 }
                 System.out.println("____________________________________________________________");
+            } else if (input.startsWith("mark ")) {
+                // Mark task as done
+                try {
+                    int taskNumber = Integer.parseInt(input.substring(5)) - 1;
+                    if (taskNumber >= 0 && taskNumber < tasks.size()) {
+                        tasks.get(taskNumber).markAsDone();
+                        System.out.println("____________________________________________________________");
+                        System.out.println(" Great! Marked as done!");
+                        System.out.println("   " + tasks.get(taskNumber));
+                        System.out.println("____________________________________________________________");
+                    } else {
+                        System.out.println("____________________________________________________________");
+                        System.out.println(" Invalid task number.");
+                        System.out.println("____________________________________________________________");
+                    }
+                } catch (NumberFormatException e) {
+                    System.out.println("____________________________________________________________");
+                    System.out.println(" Invalid input.");
+                    System.out.println("____________________________________________________________");
+                }
+            } else if (input.startsWith("unmark ")) {
+                // Mark task as not done
+                try {
+                    int taskNumber = Integer.parseInt(input.substring(7)) - 1;
+                    if (taskNumber >= 0 && taskNumber < tasks.size()) {
+                        tasks.get(taskNumber).markAsNotDone();
+                        System.out.println("____________________________________________________________");
+                        System.out.println(" Task marked as not done.");
+                        System.out.println("   " + tasks.get(taskNumber));
+                        System.out.println("____________________________________________________________");
+                    } else {
+                        System.out.println("____________________________________________________________");
+                        System.out.println(" Invalid task number. ");
+                        System.out.println("____________________________________________________________");
+                    }
+                } catch (NumberFormatException e) {
+                    System.out.println("____________________________________________________________");
+                    System.out.println(" Invalid input.");
+                    System.out.println("____________________________________________________________");
+                }
             } else {
                 // Add the input to the list of tasks
-                tasks.add(input);
+                tasks.add(new Task(input));
                 System.out.println("____________________________________________________________");
                 System.out.println(" added: " + input);
                 System.out.println("____________________________________________________________");
             }
+        }
+
+
+
 
 /**
             // Echo the user's command
@@ -48,12 +92,13 @@ public class DazAI {
             System.out.println(" " + input);
             System.out.println("____________________________________________________________");
  **/
-        }
+
 
         //Print exit message
         System.out.println("____________________________________________________________");
         System.out.println(" Bye. Hope to see you again soon!");
         System.out.println("____________________________________________________________");
+        scanner.close();
     }
 }
 
