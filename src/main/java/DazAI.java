@@ -28,7 +28,8 @@ public class DazAI {
                     System.out.println("____________________________________________________________");
                     System.out.println(" OOPS!!! The description of a todo cannot be empty.");
                     System.out.println("____________________________________________________________");
-                } else {
+                }
+                else {
                     addToDo(tasks, input);
                 }
 
@@ -36,7 +37,11 @@ public class DazAI {
                 addDeadline(tasks, input);
             } else if (input.startsWith("event ")) {
                 addEvent(tasks, input);
-            } else {
+            } else if (input.startsWith("delete")) {
+                deleteTask(tasks, input);
+            }
+
+            else {
                 try {
                     throw new DazAIException("I'm sorry, but I don't understand that command.");
                 } catch (DazAIException e) {
@@ -46,6 +51,18 @@ public class DazAI {
                 }
             }
         }
+    }
+
+    private static void deleteTask(ArrayList<Task> tasks, String input) {
+        int taskIndex = Integer.parseInt(input.split(" ")[1]) - 1;
+        Task taskToDelete = tasks.remove(taskIndex);
+
+        System.out.println("____________________________________________________________");
+        System.out.println(" Noted. I've removed this task:");
+        System.out.println("   " + taskToDelete);
+        System.out.println(" Now you have " + tasks.size() + " tasks in the list.");
+        System.out.println("____________________________________________________________");
+
     }
 
 
