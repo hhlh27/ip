@@ -19,9 +19,12 @@ public class DazAI {
                unmarkTask(tasks, input);
             } else if (input.startsWith("todo ")) {
                 addToDo(tasks,input);
-            }else if (input.startsWith("deadline ")) {
+            } else if (input.startsWith("deadline ")) {
                 addDeadline(tasks,input);
+            } else if (input.startsWith("event ")) {
+               addEvent(tasks, input);
             }
+
             else {
                 addTask(tasks, input);
             }
@@ -43,6 +46,16 @@ public class DazAI {
         System.out.println(" Bye. Hope to see you again soon!");
         System.out.println("____________________________________________________________");
         scanner.close();
+    }
+
+    private static void addEvent(ArrayList<Task> tasks, String input) {
+        String[] parts = input.substring(6).split("/from|/to", 3);
+        String description = parts[0].trim();
+        String from = parts[1].trim();
+        String to = parts[2].trim();
+        Task task = new Event(description, from, to);
+        tasks.add(task);
+        printTaskAdded(task, tasks.size());
     }
 
     private static void addDeadline(ArrayList<Task> tasks, String input) {
