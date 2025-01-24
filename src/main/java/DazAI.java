@@ -2,6 +2,17 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class DazAI {
+    public enum CommandType {
+        LIST,
+        DELETE,
+        TODO,
+        DEADLINE,
+        EVENT,
+        MARK,
+        UNMARK,
+        BYE,
+        UNKNOWN
+    }
     public static void main(String[] args) {
         ArrayList<Task> tasks = new ArrayList<>();
         Scanner scanner = new java.util.Scanner(System.in);
@@ -9,35 +20,30 @@ public class DazAI {
         //Handle user input
         while (true) {
             String input = scanner.nextLine().trim();
-            String[] words = input.split(" ", 2);
-            String command = words[0];
-            if (input.equalsIgnoreCase("bye")) {
+            CommandType command = parseCommand(input);
+            //String[] words = input.split(" ", 2);
+            //String command = words[0];
+            if (command == CommandType.BYE) {
                 System.out.println("____________________________________________________________");
                 System.out.println(" Bye. Hope to see you again soon!");
                 System.out.println("____________________________________________________________");
                 scanner.close();
                 break;
-            } else if (input.equalsIgnoreCase("list")) {
+            } else if (command == CommandType.LIST) {
                 listTasks(tasks);
-            } else if (input.startsWith("mark ")) {
+            } else if (command == CommandType.MARK) {
                 markTask(tasks, input);
-            } else if (input.startsWith("unmark ")) {
+            } else if (command == CommandType.UNMARK) {
                 unmarkTask(tasks, input);
-            } else if (input.startsWith("todo")) {
-                if (words.length < 2 || words[1].trim().isEmpty()) {
-                    System.out.println("____________________________________________________________");
-                    System.out.println(" OOPS!!! The description of a todo cannot be empty.");
-                    System.out.println("____________________________________________________________");
-                }
-                else {
-                    addToDo(tasks, input);
-                }
+            } else if (command == CommandType.TODO) {
 
-            } else if (input.startsWith("deadline ")) {
+                addToDo(tasks, input);
+
+            } else if (command == CommandType.DEADLINE) {
                 addDeadline(tasks, input);
-            } else if (input.startsWith("event ")) {
+            } else if (command == CommandType.EVENT) {
                 addEvent(tasks, input);
-            } else if (input.startsWith("delete")) {
+            } else if (command == CommandType.DELETE) {
                 deleteTask(tasks, input);
             }
 
@@ -52,7 +58,30 @@ public class DazAI {
             }
         }
     }
+    private static CommandType parseCommand(String input) {
+        String command = input.split(" ")[0].toLowerCase();
 
+        switch (command) {
+            case "list":
+                return CommandType.LIST;
+            case "delete":
+                return CommandType.DELETE;
+            case "todo":
+                return CommandType.TODO;
+            case "deadline":
+                return CommandType.DEADLINE;
+            case "event":
+                return CommandType.EVENT;
+            case "mark":
+                return CommandType.MARK;
+            case "unmark":
+                return CommandType.UNMARK;
+            case "bye":
+                return CommandType.BYE;
+            default:
+                return CommandType.UNKNOWN;
+        }
+    }
     private static void deleteTask(ArrayList<Task> tasks, String input) {
         int taskIndex = Integer.parseInt(input.split(" ")[1]) - 1;
         Task taskToDelete = tasks.remove(taskIndex);
