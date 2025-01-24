@@ -17,7 +17,12 @@ public class DazAI {
                markTask(tasks, input);
             } else if (input.startsWith("unmark ")) {
                unmarkTask(tasks, input);
-            } else {
+            } else if (input.startsWith("todo ")) {
+                addToDo(tasks,input);
+            }else if (input.startsWith("deadline ")) {
+                addDeadline(tasks,input);
+            }
+            else {
                 addTask(tasks, input);
             }
         }
@@ -39,6 +44,32 @@ public class DazAI {
         System.out.println("____________________________________________________________");
         scanner.close();
     }
+
+    private static void addDeadline(ArrayList<Task> tasks, String input) {
+        String[] parts = input.substring(9).split("/by", 2);
+
+        String description = parts[0].trim();
+        String by = parts[1].trim();
+        Task task = new Deadline(description, by);
+        tasks.add(task);
+        printTaskAdded(task, tasks.size());
+    }
+
+    private static void addToDo(ArrayList<Task> tasks, String input) {
+        String description = input.substring(5).trim();
+        Task task = new ToDo(description);
+        tasks.add(task);
+        printTaskAdded(task, tasks.size());
+    }
+
+    private static void printTaskAdded(Task task, int size) {
+        System.out.println("____________________________________________________________");
+        System.out.println(" Got it. I've added this task:");
+        System.out.println("   " + task);
+        System.out.println(" Now you have " + size + " tasks in the list.");
+        System.out.println("____________________________________________________________");
+    }
+
     private static void printGreeting() {
         String logo = "  ____                    ___    _____ \n"
                 + " |  _ \\  __ _  _____     / _\\   |__  _|\n"
