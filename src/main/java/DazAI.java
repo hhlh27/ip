@@ -9,47 +9,63 @@ public class DazAI {
         //Handle user input
         while (true) {
             String input = scanner.nextLine().trim();
+            String[] words = input.split(" ", 2);
+            String command = words[0];
             if (input.equalsIgnoreCase("bye")) {
+                System.out.println("____________________________________________________________");
+                System.out.println(" Bye. Hope to see you again soon!");
+                System.out.println("____________________________________________________________");
+                scanner.close();
                 break;
             } else if (input.equalsIgnoreCase("list")) {
-               listTasks(tasks);
+                listTasks(tasks);
             } else if (input.startsWith("mark ")) {
-               markTask(tasks, input);
+                markTask(tasks, input);
             } else if (input.startsWith("unmark ")) {
-               unmarkTask(tasks, input);
-            } else if (input.startsWith("todo ")) {
-                addToDo(tasks,input);
-            } else if (input.startsWith("deadline ")) {
-                addDeadline(tasks,input);
-            } else if (input.startsWith("event ")) {
-               addEvent(tasks, input);
-            }
+                unmarkTask(tasks, input);
+            } else if (input.startsWith("todo")) {
+                if (words.length < 2 || words[1].trim().isEmpty()) {
+                    System.out.println("____________________________________________________________");
+                    System.out.println(" OOPS!!! The description of a todo cannot be empty.");
+                    System.out.println("____________________________________________________________");
+                } else {
+                    addToDo(tasks, input);
+                }
 
-            else {
-                addTask(tasks, input);
+            } else if (input.startsWith("deadline ")) {
+                addDeadline(tasks, input);
+            } else if (input.startsWith("event ")) {
+                addEvent(tasks, input);
+            } else {
+                try {
+                    throw new DazAIException("I'm sorry, but I don't understand that command.");
+                } catch (DazAIException e) {
+                    System.out.println("____________________________________________________________");
+                    System.out.println(" OOPS!!! " + e.getMessage());
+                    System.out.println("____________________________________________________________");
+                }
             }
         }
-
-
-
-
-/**
-            // Echo the user's command
-            System.out.println("____________________________________________________________");
-            System.out.println(" " + input);
-            System.out.println("____________________________________________________________");
- **/
-
-
-        //Print exit message
-        System.out.println("____________________________________________________________");
-        System.out.println(" Bye. Hope to see you again soon!");
-        System.out.println("____________________________________________________________");
-        scanner.close();
     }
 
+
+    /**
+     * // Echo the user's command
+     * System.out.println("____________________________________________________________");
+     * System.out.println(" " + input);
+     * System.out.println("____________________________________________________________");
+     **/
+
+
     private static void addEvent(ArrayList<Task> tasks, String input) {
+
         String[] parts = input.substring(6).split("/from|/to", 3);
+        if (parts.length < 3) {
+            System.out.println("____________________________________________________________");
+            System.out.println(" Invalid format. Input: event <description> /from <time> /to <time>");
+            System.out.println("____________________________________________________________");
+
+        }
         String description = parts[0].trim();
         String from = parts[1].trim();
         String to = parts[2].trim();
@@ -60,7 +76,12 @@ public class DazAI {
 
     private static void addDeadline(ArrayList<Task> tasks, String input) {
         String[] parts = input.substring(9).split("/by", 2);
+        if (parts.length < 2) {
+            System.out.println("____________________________________________________________");
+            System.out.println(" Invalid format. Input: deadline <description> /by <time>");
+            System.out.println("____________________________________________________________");
 
+        }
         String description = parts[0].trim();
         String by = parts[1].trim();
         Task task = new Deadline(description, by);
@@ -69,10 +90,24 @@ public class DazAI {
     }
 
     private static void addToDo(ArrayList<Task> tasks, String input) {
-        String description = input.substring(5).trim();
-        Task task = new ToDo(description);
-        tasks.add(task);
-        printTaskAdded(task, tasks.size());
+        try {
+            String description = input.substring(5).trim();
+            if (description.isEmpty()) {
+                throw new DazAIException("The description of a todo cannot be empty.");
+            }
+            Task task = new ToDo(description);
+            tasks.add(task);
+            printTaskAdded(task, tasks.size());
+        } catch (DazAIException e) {
+            System.out.println("____________________________________________________________");
+            System.out.println(" OOPS!!! " + e.getMessage());
+            System.out.println("____________________________________________________________");
+        } catch (StringIndexOutOfBoundsException e) {
+
+            System.out.println("____________________________________________________________");
+            System.out.println(" OOPS!!! The description of a todo cannot be empty.");
+            System.out.println("____________________________________________________________");
+        }
     }
 
     private static void printTaskAdded(Task task, int size) {
@@ -97,6 +132,7 @@ public class DazAI {
         System.out.println(" Hello! I'm DazAI");
         System.out.println(" What can I do for you?");
     }
+
     private static void listTasks(ArrayList<Task> tasks) {
         // Display the list of tasks
         System.out.println("____________________________________________________________");
@@ -110,6 +146,7 @@ public class DazAI {
         }
         System.out.println("____________________________________________________________");
     }
+
     private static void addTask(ArrayList<Task> tasks, String input) {
         // Add the input to the list of tasks
         tasks.add(new Task(input));
@@ -117,6 +154,7 @@ public class DazAI {
         System.out.println(" added: " + input);
         System.out.println("____________________________________________________________");
     }
+
     private static void markTask(ArrayList<Task> tasks, String input) {
         // Mark task as done
         try {
@@ -138,6 +176,7 @@ public class DazAI {
             System.out.println("____________________________________________________________");
         }
     }
+
     private static void unmarkTask(ArrayList<Task> tasks, String input) {
         // Mark task as not done
         try {
@@ -159,6 +198,7 @@ public class DazAI {
             System.out.println("____________________________________________________________");
         }
     }
-
 }
+
+
 
