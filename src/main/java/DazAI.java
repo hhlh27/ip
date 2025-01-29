@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.io.IOException;
 
 public class DazAI {
     public enum CommandType {
@@ -15,6 +16,12 @@ public class DazAI {
     }
     public static void main(String[] args) {
         ArrayList<Task> tasks = new ArrayList<>();
+        try {
+            tasks = Storage.loadTasks(); // Load tasks from file at the start
+        } catch (IOException e) {
+            System.out.println("Error loading tasks: " + e.getMessage());
+        }
+
         Scanner scanner = new java.util.Scanner(System.in);
         printGreeting();
         //Handle user input
@@ -55,6 +62,11 @@ public class DazAI {
                     System.out.println(" OOPS!!! " + e.getMessage());
                     System.out.println("____________________________________________________________");
                 }
+            }
+            try {
+                Storage.saveTasks(tasks); // Save tasks after every change
+            } catch (IOException e) {
+                System.out.println("Error saving tasks: " + e.getMessage());
             }
         }
     }
