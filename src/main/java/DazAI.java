@@ -117,34 +117,40 @@ public class DazAI {
 
     private static void addEvent(ArrayList<Task> tasks, String input) {
 
-        String[] parts = input.substring(6).split("/from|/to", 3);
-        if (parts.length < 3) {
-            System.out.println("____________________________________________________________");
-            System.out.println(" Invalid format. Input: event <description> /from <time> /to <time>");
-            System.out.println("____________________________________________________________");
-
+        try {
+            String[] parts = input.split(" /from | /to ");
+            if (parts.length < 3) {
+                System.out.println("Invalid event format! Use: event <desc> /from yyyy-MM-dd HHmm /to yyyy-MM-dd HHmm");
+                return;
+            }
+            String description = parts[0].substring(6).trim(); // Remove "event "
+            String from = parts[1].trim();
+            String to = parts[2].trim();
+            Event event = new Event(description, from, to);
+            tasks.add(event);
+            Storage.saveTasks(tasks);
+            System.out.println("Added: " + event);
+        } catch (Exception e) {
+            System.out.println("Error parsing event: " + e.getMessage());
         }
-        String description = parts[0].trim();
-        String from = parts[1].trim();
-        String to = parts[2].trim();
-        Task task = new Event(description, from, to);
-        tasks.add(task);
-        printTaskAdded(task, tasks.size());
     }
 
     private static void addDeadline(ArrayList<Task> tasks, String input) {
-        String[] parts = input.substring(9).split("/by", 2);
-        if (parts.length < 2) {
-            System.out.println("____________________________________________________________");
-            System.out.println(" Invalid format. Input: deadline <description> /by <time>");
-            System.out.println("____________________________________________________________");
-
+        try {
+            String[] parts = input.split(" /by ");
+            if (parts.length < 2) {
+                System.out.println("Invalid deadline format! Use: deadline <desc> /by yyyy-MM-dd HHmm");
+                return;
+            }
+            String description = parts[0].substring(9).trim(); // Remove "deadline "
+            String by = parts[1].trim();
+            Deadline deadline = new Deadline(description, by);
+            tasks.add(deadline);
+            Storage.saveTasks(tasks);
+            System.out.println("Added: " + deadline);
+        } catch (Exception e) {
+            System.out.println("Error parsing deadline: " + e.getMessage());
         }
-        String description = parts[0].trim();
-        String by = parts[1].trim();
-        Task task = new Deadline(description, by);
-        tasks.add(task);
-        printTaskAdded(task, tasks.size());
     }
 
     private static void addToDo(ArrayList<Task> tasks, String input) {
