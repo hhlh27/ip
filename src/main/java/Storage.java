@@ -64,12 +64,12 @@ public class Storage {
 
 
 
-    public static void saveTasks(ArrayList<Task> tasks) throws IOException {
+    public static void saveTasks(TaskList tasks) throws IOException {
         File file = new File(FILE_PATH);
         file.getParentFile().mkdirs(); // Ensure directories exist
 
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(file))) {
-            for (Task task : tasks) {
+            for (Task task : tasks.getAllTasks()) {
                 String taskType = task instanceof ToDo ? "T" :
                         task instanceof Deadline ? "D" :
                                 task instanceof Event ? "E" : "?";
