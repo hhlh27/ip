@@ -1,3 +1,5 @@
+package dazai;
+
 public class Parser {
     public static Command parse(String input) throws DazAIException {
         String[] words = input.split(" ", 2);

@@ -1,17 +1,20 @@
+package dazai;
+
 import java.io.IOException;
 
-public class DeleteCommand extends Command {
+public class UnmarkCommand extends Command {
     private final int taskIndex;
 
-    public DeleteCommand(int taskIndex) {
-        this.taskIndex = taskIndex;
+    public UnmarkCommand(int taskIndex) {
+        this.taskIndex = taskIndex - 1;
     }
 
     @Override
     public void execute(TaskList taskList, Ui ui, Storage storage) {
         try {
-            Task removedTask = taskList.deleteTask(taskIndex);
-            ui.showMessage("Noted. I've removed this task:\n  " + removedTask);
+            Task task = taskList.getTask(taskIndex);
+            task.markAsNotDone();
+            ui.showMessage("OK, I've marked this task as not done yet:\n  " + task);
             storage.saveTasks(taskList);
         } catch (IndexOutOfBoundsException e) {
             ui.showMessage("Invalid task number! Please enter a valid index.");

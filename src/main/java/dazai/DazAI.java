@@ -1,3 +1,5 @@
+package dazai;
+
 import java.io.IOException;
 
 public class DazAI {
