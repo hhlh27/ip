@@ -10,7 +10,7 @@ public class Storage {
         File file = new File(FILE_PATH);
 
         if (!file.exists()) {
-            return tasks; // Return empty list if file doesn't exist
+            return tasks;
         }
 
         try (BufferedReader br = new BufferedReader(new FileReader(file))) {
@@ -20,7 +20,7 @@ public class Storage {
 
                 if (taskData.length < 3) {
                     System.out.println("Skipping invalid line: " + line);
-                    continue; // Skip lines with missing fields
+                    continue;
                 }
 
                 String taskType = taskData[0].trim();
@@ -33,33 +33,28 @@ public class Storage {
                         task = new ToDo(description);
                         break;
                     case "D":
-                        if (taskData.length < 4) {  // Ensure there is a deadline field
+                        if (taskData.length < 4) {
                             System.out.println("Skipping invalid deadline task: " + line);
                             continue;
                         }
-                        String deadline = taskData[3].trim();
-                        task = new Deadline(description, deadline);
+                        task = new Deadline(description, taskData[3].trim());
                         break;
                     case "E":
-                        if (taskData.length < 5) {  // Ensure both from and to fields exist
+                        if (taskData.length < 5) {
                             System.out.println("Skipping invalid event task: " + line);
                             continue;
                         }
-                        String from = taskData[3].trim();
-                        String to = taskData[4].trim();
-                        task = new Event(description, from, to);
+                        task = new Event(description, taskData[3].trim(), taskData[4].trim());
                         break;
                     default:
                         System.out.println("Skipping unknown task type: " + line);
                         continue;
                 }
 
-                if (task != null) {
-                    if (isDone) {
-                        task.markAsDone();
-                    }
-                    tasks.add(task);
+                if (task != null && isDone) {
+                    task.markAsDone();
                 }
+                tasks.add(task);
             }
         } catch (IOException e) {
             throw new IOException("Error loading tasks: " + e.getMessage());
@@ -68,32 +63,30 @@ public class Storage {
     }
 
 
+
     public static void saveTasks(ArrayList<Task> tasks) throws IOException {
         File file = new File(FILE_PATH);
-        file.getParentFile().mkdirs(); // Ensure the directory exists
+        file.getParentFile().mkdirs(); // Ensure directories exist
 
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(file))) {
             for (Task task : tasks) {
-                String taskType = "";
-                String taskInfo = "";
-
-                if (task instanceof ToDo) {
-                    taskType = "T";
-                    taskInfo = task.getDescription();
-                } else if (task instanceof Deadline) {
-                    taskType = "D";
-                    taskInfo = ((Deadline) task).getDescription() + " | " + ((Deadline) task).getBy();
-                } else if (task instanceof Event) {
-                    taskType = "E";
-                    taskInfo = ((Event) task).getDescription() + " | " + ((Event) task).toString();
-                }
+                String taskType = task instanceof ToDo ? "T" :
+                        task instanceof Deadline ? "D" :
+                                task instanceof Event ? "E" : "?";
 
                 String status = task.isDone() ? "1" : "0";
-                bw.write(taskType + " | " + status + " | " + taskInfo);
+                String description = task.getDescription();
+                String extra = "";
+
+                if (task instanceof Deadline) {
+                    extra = ((Deadline) task).getBy();
+                } else if (task instanceof Event) {
+                    extra = ((Event) task).getFrom() + " | " + ((Event) task).getTo();
+                }
+
+                bw.write(taskType + " | " + status + " | " + description + (extra.isEmpty() ? "" : " | " + extra));
                 bw.newLine();
             }
-        } catch (IOException e) {
-            throw new IOException("Error saving tasks: " + e.getMessage());
         }
     }
 }
