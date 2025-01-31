@@ -6,6 +6,7 @@ import java.io.IOException;
  * Represents a command to add a task to the task list.
  */
 public class AddCommand extends Command {
+
     private final String type;
     private final String description;
     private final String dateTime1; // Used for deadlines and events
