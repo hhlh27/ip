@@ -28,14 +28,21 @@ test {
 }
 
 application {
-    mainClass.set("seedu.duke.Duke")
+    mainClass.set("dazai.DazAI")
 }
 
 shadowJar {
-    archiveBaseName = "duke"
+    archiveBaseName = "dazai"
     archiveClassifier = null
+    archiveFileName = 'dazai.jar'
+
 }
 
 run{
     standardInput = System.in
+}
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
 }
