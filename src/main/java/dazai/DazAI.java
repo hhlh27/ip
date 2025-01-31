@@ -2,12 +2,12 @@ package dazai;
 
 import java.io.IOException;
 
-
 /**
  * The main class for the DazAI chatbot application.
- * It initializes the required components and manages the main application loop.
+ * Initializes the required components and manages the main application loop.
  */
 public class DazAI {
+
     private Storage storage;
     private TaskList taskList;
     private Ui ui;
@@ -71,5 +71,3 @@ public class DazAI {
         new DazAI().run(); // Run the bot
     }
 }
-
-
