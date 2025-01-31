@@ -22,6 +22,11 @@ public class Parser {
                 return parseUnmark(words);
             case "delete":
                 return parseDelete(words);
+            case "find":
+                if (words.length < 2 || words[1].trim().isEmpty()) {
+                    throw new DazAIException("Please specify a keyword to search.");
+                }
+                return new FindCommand(words[1].trim());
             default:
                 throw new DazAIException("I'm sorry, but I don't understand that command.");
         }
