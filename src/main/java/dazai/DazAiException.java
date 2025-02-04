@@ -1,15 +1,15 @@
 package dazai;
 
 /**
- * Represents an exception specific to the DazAI application.
+ * Represents an exception specific to the DazAi application.
  */
-public class DazAIException extends Exception {
+public class DazAiException extends Exception {
     /**
-     * Constructs a new DazAIException with the specified detail message.
+     * Constructs a new DazAiException with the specified detail message.
      *
      * @param message The detail message describing the exception.
      */
-    public DazAIException(String message) {
+    public DazAiException(String message) {
         super(message);
     }
 }

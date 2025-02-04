@@ -3,20 +3,20 @@ package dazai;
 import java.io.IOException;
 
 /**
- * The main class for the DazAI chatbot application.
+ * The main class for the DazAi chatbot application.
  * Initializes the required components and manages the main application loop.
  */
-public class DazAI {
+public class DazAi {
 
     private Storage storage;
     private TaskList taskList;
     private Ui ui;
 
     /**
-     * Constructs a new DazAI instance.
+     * Constructs a new DazAi instance.
      * Initializes the UI, storage, and task list, and loads tasks from storage.
      */
-    public DazAI() {
+    public DazAi() {
         this.ui = new Ui();
         this.storage = new Storage();
         this.taskList = new TaskList();
@@ -53,7 +53,7 @@ public class DazAI {
                 Command command = Parser.parse(fullCommand);
                 command.execute(taskList, ui, storage);
                 isExit = command.isExit();
-            } catch (DazAIException e) {
+            } catch (DazAiException e) {
                 ui.showMessage("Invalid command: " + e.getMessage());
             } finally {
                 ui.showLine();
@@ -63,11 +63,16 @@ public class DazAI {
 
     /**
      * The entry point of the application.
-     * Creates a new instance of DazAI and starts the chatbot.
+     * Creates a new instance of DazAi and starts the chatbot.
      *
      * @param args Command-line arguments (not used).
      */
     public static void main(String[] args) {
-        new DazAI().run(); // Run the bot
+
+        new DazAi().run(); // Run the bot
+
+    }
+    public String getResponse(String input) {
+        return "DazAi heard: " + input;
     }
 }
