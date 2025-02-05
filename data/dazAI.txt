@@ -1,5 +1,5 @@
 D | 0 | return book | 2025-02-01 1800
-T | 0 | borrow book
+T | 1 | borrow book
 D | 0 | return book | 2025-09-30 1800
 T | 0 | do assignment
 T | 0 | write essay
