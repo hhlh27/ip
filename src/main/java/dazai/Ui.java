@@ -49,28 +49,21 @@ public class Ui {
         System.out.println("____________________________________________________________");
     }
 
-    /**
-     * Displays a given message.
-     *
-     * @param message The message to be displayed.
-     */
-    public void showMessage(String message) {
-        System.out.println(message);
+
+    public void showMessage(String... messages) {
+        for (String message : messages) {
+            System.out.println(message);
+        }
     }
 
-    /**
-     * Displays the list of tasks.
-     *
-     * @param taskList The task list to be displayed.
-     */
-    public void showTaskList(TaskList taskList) {
-        if (taskList.isEmpty()) {
+
+    public void showTaskList(Task... tasks) {
+        if (tasks.length == 0) {
             System.out.println("Your task list is empty.");
         } else {
             System.out.println("Here are your tasks:");
-            ArrayList<Task> tasks = taskList.getAllTasks();
-            for (int i = 0; i < tasks.size(); i++) {
-                System.out.println((i + 1) + ". " + tasks.get(i));
+            for (int i = 0; i < tasks.length; i++) {
+                System.out.println((i + 1) + ". " + tasks[i]);
             }
         }
     }
