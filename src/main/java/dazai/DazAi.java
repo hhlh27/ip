@@ -11,7 +11,7 @@ public class DazAi {
     private Storage storage;
     private TaskList taskList;
     private Ui ui;
-
+    private Parser parser;
     /**
      * Constructs a new DazAi instance.
      * Initializes the UI, storage, and task list, and loads tasks from storage.
@@ -73,6 +73,11 @@ public class DazAi {
 
     }
     public String getResponse(String input) {
-        return "DazAi heard: " + input;
+        try {
+            Command command = parser.parse(input);
+            return command.execute(taskList, ui, storage);
+        } catch (DazAiException e) {
+            return "Oops! " + e.getMessage();
+        }
     }
 }

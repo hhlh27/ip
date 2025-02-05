@@ -24,7 +24,7 @@ public class Main extends Application {
             Scene scene = new Scene(ap);
             stage.setTitle("DazAi Chatbot");
             stage.setScene(scene);
-            fxmlLoader.<MainWindow>getController().setDazAi(dazAi);  // inject the Duke instance
+            fxmlLoader.<MainWindow>getController().setDazAi(dazAi);  // inject the DazAi instance
             stage.show();
         } catch (IOException e) {
             showErrorDialog("Error loading the application", e.getMessage());

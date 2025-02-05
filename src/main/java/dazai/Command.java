@@ -12,7 +12,7 @@ public abstract class Command {
      * @param storage The storage handler for saving tasks.
      * @throws DazAiException If an error occurs during execution.
      */
-    public abstract void execute(TaskList tasks, Ui ui, Storage storage) throws DazAiException;
+    public abstract String execute(TaskList tasks, Ui ui, Storage storage) throws DazAiException;
 
     /**
      * Indicates whether this command should exit the program.

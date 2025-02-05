@@ -36,17 +36,16 @@ public class AddCommand extends Command {
      * @param storage The storage handler for saving tasks.
      */
     @Override
-    public void execute(TaskList taskList, Ui ui, Storage storage) {
+    public String execute(TaskList taskList, Ui ui, Storage storage) throws DazAiException {
         try {
             Task task = createTask();
             taskList.addTask(task);
-            ui.showMessage("Added: " + task);
             storage.saveTasks(taskList);  // Save tasks only once, after processing
+            return "Added: " + task;
         } catch (DazAiException | IOException e) {
-            ui.showMessage("Error: " + e.getMessage());
+            return "Error: " + e.getMessage();
         }
     }
-
     /**
      * Creates a task based on the provided type and details.
      *

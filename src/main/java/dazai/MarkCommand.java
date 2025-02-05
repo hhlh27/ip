@@ -28,16 +28,16 @@ public class MarkCommand extends Command {
      * @param storage The storage handler for saving tasks.
      */
     @Override
-    public void execute(TaskList taskList, Ui ui, Storage storage) {
+    public String execute(TaskList taskList, Ui ui, Storage storage) throws DazAiException {
         try {
             Task task = taskList.getTask(taskIndex);
             task.markAsDone();
-            ui.showMessage("Nice! I've marked this task as done:\n  " + task);
             storage.saveTasks(taskList);
+            return "Nice! I've marked this task as done:\n  " + task;
         } catch (IndexOutOfBoundsException e) {
-            ui.showMessage("Invalid task number! Please enter a valid index.");
+            throw new DazAiException("Invalid task number! Please enter a valid index.");
         } catch (IOException e) {
-            ui.showMessage("Failed to save tasks.");
+            throw new DazAiException("Failed to save tasks.");
         }
     }
 }
