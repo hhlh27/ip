@@ -29,7 +29,7 @@ public class Ui {
         // Print greeting message
         System.out.println("____________________________________________________________");
         System.out.println(" Hello from\n" + logo);
-        System.out.println(" Hello! I'm DazAI");
+        System.out.println(" Hello! I'm DazAi");
         System.out.println(" What can I do for you?");
     }
 

@@ -12,9 +12,9 @@ public class Parser {
      *
      * @param input The user input string.
      * @return A command corresponding to the user input.
-     * @throws DazAIException If the input cannot be parsed into a valid command.
+     * @throws DazAiException If the input cannot be parsed into a valid command.
      */
-    public static Command parse(String input) throws DazAIException {
+    public static Command parse(String input) throws DazAiException {
         String[] words = input.split(" ", 2);
         String commandWord = words[0].toLowerCase();
 
@@ -37,11 +37,11 @@ public class Parser {
                 return parseDelete(words);
             case "find":
                 if (words.length < 2 || words[1].trim().isEmpty()) {
-                    throw new DazAIException("Please specify a keyword to search.");
+                    throw new DazAiException("Please specify a keyword to search.");
                 }
                 return new FindCommand(words[1].trim());
             default:
-                throw new DazAIException("I'm sorry, but I don't understand that command.");
+                throw new DazAiException("I'm sorry, but I don't understand that command.");
         }
     }
 
@@ -50,11 +50,11 @@ public class Parser {
      *
      * @param words The split input words array.
      * @return The AddCommand for the todo task.
-     * @throws DazAIException If the todo description is missing or invalid.
+     * @throws DazAiException If the todo description is missing or invalid.
      */
-    private static Command parseTodo(String[] words) throws DazAIException {
+    private static Command parseTodo(String[] words) throws DazAiException {
         if (words.length < 2 || words[1].trim().isEmpty()) {
-            throw new DazAIException("The description of a todo cannot be empty.");
+            throw new DazAiException("The description of a todo cannot be empty.");
         }
         return new AddCommand("todo", words[1].trim(), null, null);
     }
@@ -64,15 +64,15 @@ public class Parser {
      *
      * @param words The split input words array.
      * @return The AddCommand for the deadline task.
-     * @throws DazAIException If the deadline description or date is missing.
+     * @throws DazAiException If the deadline description or date is missing.
      */
-    private static Command parseDeadline(String[] words) throws DazAIException {
+    private static Command parseDeadline(String[] words) throws DazAiException {
         if (words.length < 2) {
-            throw new DazAIException("Invalid deadline format! Use: deadline <desc> /by yyyy-MM-dd HHmm");
+            throw new DazAiException("Invalid deadline format! Use: deadline <desc> /by yyyy-MM-dd HHmm");
         }
         String[] parts = words[1].split(" /by ", 2);
         if (parts.length < 2) {
-            throw new DazAIException("Invalid deadline format! Use: deadline <desc> /by yyyy-MM-dd HHmm");
+            throw new DazAiException("Invalid deadline format! Use: deadline <desc> /by yyyy-MM-dd HHmm");
         }
         return new AddCommand("deadline", parts[0].trim(), parts[1].trim(), null);
     }
@@ -82,15 +82,15 @@ public class Parser {
      *
      * @param words The split input words array.
      * @return The AddCommand for the event task.
-     * @throws DazAIException If the event description or time is missing.
+     * @throws DazAiException If the event description or time is missing.
      */
-    private static Command parseEvent(String[] words) throws DazAIException {
+    private static Command parseEvent(String[] words) throws DazAiException {
         if (words.length < 2) {
-            throw new DazAIException("Invalid event format! Use: event <desc> /from yyyy-MM-dd HHmm /to yyyy-MM-dd HHmm");
+            throw new DazAiException("Invalid event format! Use: event <desc> /from yyyy-MM-dd HHmm /to yyyy-MM-dd HHmm");
         }
         String[] parts = words[1].split(" /from | /to ", 3);
         if (parts.length < 3) {
-            throw new DazAIException("Invalid event format! Use: event <desc> /from yyyy-MM-dd HHmm /to yyyy-MM-dd HHmm");
+            throw new DazAiException("Invalid event format! Use: event <desc> /from yyyy-MM-dd HHmm /to yyyy-MM-dd HHmm");
         }
         return new AddCommand("event", parts[0].trim(), parts[1].trim(), parts[2].trim());
     }
@@ -100,11 +100,11 @@ public class Parser {
      *
      * @param words The split input words array.
      * @return The MarkCommand for the task.
-     * @throws DazAIException If no task number is specified.
+     * @throws DazAiException If no task number is specified.
      */
-    private static Command parseMark(String[] words) throws DazAIException {
+    private static Command parseMark(String[] words) throws DazAiException {
         if (words.length < 2) {
-            throw new DazAIException("Please specify a task number to mark.");
+            throw new DazAiException("Please specify a task number to mark.");
         }
         return new MarkCommand(Integer.parseInt(words[1].trim()));
     }
@@ -114,11 +114,11 @@ public class Parser {
      *
      * @param words The split input words array.
      * @return The UnmarkCommand for the task.
-     * @throws DazAIException If no task number is specified.
+     * @throws DazAiException If no task number is specified.
      */
-    private static Command parseUnmark(String[] words) throws DazAIException {
+    private static Command parseUnmark(String[] words) throws DazAiException {
         if (words.length < 2) {
-            throw new DazAIException("Please specify a task number to unmark.");
+            throw new DazAiException("Please specify a task number to unmark.");
         }
         return new UnmarkCommand(Integer.parseInt(words[1].trim()));
     }
@@ -128,11 +128,11 @@ public class Parser {
      *
      * @param words The split input words array.
      * @return The DeleteCommand for the task.
-     * @throws DazAIException If no task number is specified.
+     * @throws DazAiException If no task number is specified.
      */
-    private static Command parseDelete(String[] words) throws DazAIException {
+    private static Command parseDelete(String[] words) throws DazAiException {
         if (words.length < 2) {
-            throw new DazAIException("Please specify a task number to delete.");
+            throw new DazAiException("Please specify a task number to delete.");
         }
         return new DeleteCommand(Integer.parseInt(words[1].trim()));
     }

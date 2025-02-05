@@ -10,9 +10,9 @@ public abstract class Command {
      * @param tasks The task list to modify.
      * @param ui The user interface for displaying messages.
      * @param storage The storage handler for saving tasks.
-     * @throws DazAIException If an error occurs during execution.
+     * @throws DazAiException If an error occurs during execution.
      */
-    public abstract void execute(TaskList tasks, Ui ui, Storage storage) throws DazAIException;
+    public abstract String execute(TaskList tasks, Ui ui, Storage storage) throws DazAiException;
 
     /**
      * Indicates whether this command should exit the program.

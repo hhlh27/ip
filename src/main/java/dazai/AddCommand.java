@@ -36,42 +36,41 @@ public class AddCommand extends Command {
      * @param storage The storage handler for saving tasks.
      */
     @Override
-    public void execute(TaskList taskList, Ui ui, Storage storage) {
+    public String execute(TaskList taskList, Ui ui, Storage storage) throws DazAiException {
         try {
             Task task = createTask();
             taskList.addTask(task);
-            ui.showMessage("Added: " + task);
             storage.saveTasks(taskList);  // Save tasks only once, after processing
-        } catch (DazAIException | IOException e) {
-            ui.showMessage("Error: " + e.getMessage());
+            return "Added: " + task;
+        } catch (DazAiException | IOException e) {
+            return "Error: " + e.getMessage();
         }
     }
-
     /**
      * Creates a task based on the provided type and details.
      *
      * @return The created Task object.
-     * @throws DazAIException If the task type or parameters are invalid.
+     * @throws DazAiException If the task type or parameters are invalid.
      */
-    private Task createTask() throws DazAIException {
+    private Task createTask() throws DazAiException {
         switch (type) {
             case "event":
                 if (dateTime1 == null || dateTime2 == null) {
-                    throw new DazAIException("Invalid event format! Use: event <desc> /from yyyy-MM-dd HHmm /to yyyy-MM-dd HHmm");
+                    throw new DazAiException("Invalid event format! Use: event <desc> /from yyyy-MM-dd HHmm /to yyyy-MM-dd HHmm");
                 }
                 return new Event(description, dateTime1, dateTime2);
             case "deadline":
                 if (dateTime1 == null) {
-                    throw new DazAIException("Invalid deadline format! Use: deadline <desc> /by yyyy-MM-dd HHmm");
+                    throw new DazAiException("Invalid deadline format! Use: deadline <desc> /by yyyy-MM-dd HHmm");
                 }
                 return new Deadline(description, dateTime1);
             case "todo":
                 if (description.isEmpty()) {
-                    throw new DazAIException("The description of a todo cannot be empty.");
+                    throw new DazAiException("The description of a todo cannot be empty.");
                 }
                 return new ToDo(description);
             default:
-                throw new DazAIException("Invalid task type! Use: event, deadline, or todo.");
+                throw new DazAiException("Invalid task type! Use: event, deadline, or todo.");
         }
     }
 
