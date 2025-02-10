@@ -1,7 +1,10 @@
 package dazai;
 
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
+
 
 /**
  * Represents a command to add a task to the task list.
@@ -13,11 +16,14 @@ public class AddCommand extends Command {
     private final String fromDateTime; // Used for deadlines and events
     private final String toDateTime;   // Used for events only
 
+
     /**
      * Constructs an AddCommand with the specified task type, description, and dates.
      *
      * @param type        The type of task (event, deadline, or todo).
      * @param description The description of the task.
+
+=======
      * @param fromDateTime The first date/time parameter (for deadlines and events).
      * @param toDateTime  The second date/time parameter (for events only).
      */
@@ -26,6 +32,7 @@ public class AddCommand extends Command {
         this.description = Objects.requireNonNull(description, "Task description cannot be null").trim();
         this.fromDateTime = (fromDateTime != null) ? fromDateTime.trim() : null;
         this.toDateTime = (toDateTime != null) ? toDateTime.trim() : null;
+
     }
 
     /**
@@ -76,7 +83,10 @@ public class AddCommand extends Command {
      * @throws DazAiException If the event details are invalid.
      */
     private void validateEvent() throws DazAiException {
-        if (fromDateTime == null || toDateTime == null || fromDateTime.isEmpty() || toDateTime.isEmpty()) {
+        List<String> eventDetails = Arrays.asList(fromDateTime, toDateTime);
+
+        // Use Streams to check if any of the event details are null or empty
+        if (eventDetails.stream().anyMatch(s -> s == null || s.isEmpty())) {
             throw new DazAiException("Invalid event format! Use: event <desc> /from yyyy-MM-dd HHmm /to yyyy-MM-dd HHmm");
         }
     }
