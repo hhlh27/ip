@@ -6,6 +6,9 @@ public class FindCommand extends Command {
     private final String keyword;
 
     public FindCommand(String keyword) {
+        if (keyword == null || keyword.trim().isEmpty()) {
+            throw new IllegalArgumentException("Keyword cannot be empty.");
+        }
         this.keyword = keyword.trim().toLowerCase(); // Ensure the search is case-insensitive
     }
 
