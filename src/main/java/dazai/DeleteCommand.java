@@ -26,6 +26,10 @@ public class DeleteCommand extends Command {
      */
     @Override
     public String execute(TaskList taskList, Ui ui, Storage storage) {
+        assert taskList != null : "TaskList should not be null";
+        assert ui != null : "Ui should not be null";
+        assert storage != null : "Storage should not be null";
+        assert taskIndex >= 0 : "Task index should be non-negative";
         try {
             Task removedTask = taskList.deleteTask(taskIndex);
             storage.saveTasks(taskList);  // Save tasks only once, after processing

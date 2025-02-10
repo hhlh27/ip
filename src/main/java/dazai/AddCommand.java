@@ -21,6 +21,8 @@ public class AddCommand extends Command {
      * @param dateTime2 The second date/time parameter (for events only).
      */
     public AddCommand(String type, String description, String dateTime1, String dateTime2) {
+        assert type != null && !type.isEmpty() : "Task type cannot be null or empty";
+        assert description != null && !description.isEmpty() : "Task description cannot be null or empty";
         this.type = type;
         this.description = description;
         this.dateTime1 = dateTime1;
