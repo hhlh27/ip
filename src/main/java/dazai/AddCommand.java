@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
+
 
 /**
  * Represents a command to add a task to the task list.
@@ -13,22 +13,26 @@ public class AddCommand extends Command {
 
     private final String type;
     private final String description;
-    private final String startDateTime; // Renamed for clarity
-    private final String endDateTime;   // Renamed for clarity
+    private final String fromDateTime; // Used for deadlines and events
+    private final String toDateTime;   // Used for events only
+
 
     /**
      * Constructs an AddCommand with the specified task type, description, and dates.
      *
      * @param type        The type of task (event, deadline, or todo).
      * @param description The description of the task.
-     * @param startDateTime The first date/time parameter (for deadlines and events).
-     * @param endDateTime  The second date/time parameter (for events only).
+
+=======
+     * @param fromDateTime The first date/time parameter (for deadlines and events).
+     * @param toDateTime  The second date/time parameter (for events only).
      */
-    public AddCommand(String type, String description, String startDateTime, String endDateTime) {
+    public AddCommand(String type, String description, String fromDateTime, String toDateTime) {
         this.type = Objects.requireNonNull(type, "Task type cannot be null").toLowerCase().trim();
         this.description = Objects.requireNonNull(description, "Task description cannot be null").trim();
-        this.startDateTime = (startDateTime != null) ? startDateTime.trim() : null;
-        this.endDateTime = (endDateTime != null) ? endDateTime.trim() : null;
+        this.fromDateTime = (fromDateTime != null) ? fromDateTime.trim() : null;
+        this.toDateTime = (toDateTime != null) ? toDateTime.trim() : null;
+
     }
 
     /**
@@ -59,18 +63,18 @@ public class AddCommand extends Command {
      */
     private Task createTask() throws DazAiException {
         switch (type) {
-            case "event":
-                validateEvent();
-                return new Event(description, startDateTime, endDateTime);
-            case "deadline":
-                validateDeadline();
-                return new Deadline(description, startDateTime);
-            case "todo":
-                validateToDo();
-                return new ToDo(description);
-            default:
-                throw new DazAiException("Invalid task type! Use: event, deadline, or todo.");
-        }
+        case "event":
+            validateEvent();
+            return new Event(description, fromDateTime, toDateTime);
+        case "deadline":
+            validateDeadline();
+            return new Deadline(description, fromDateTime);
+        case "todo":
+            validateToDo();
+            return new ToDo(description);
+        default:
+            throw new DazAiException("Invalid task type! Use: event, deadline, or todo.");
+    }
     }
 
     /**
@@ -79,7 +83,7 @@ public class AddCommand extends Command {
      * @throws DazAiException If the event details are invalid.
      */
     private void validateEvent() throws DazAiException {
-        List<String> eventDetails = Arrays.asList(startDateTime, endDateTime);
+        List<String> eventDetails = Arrays.asList(fromDateTime, toDateTime);
 
         // Use Streams to check if any of the event details are null or empty
         if (eventDetails.stream().anyMatch(s -> s == null || s.isEmpty())) {
@@ -93,7 +97,7 @@ public class AddCommand extends Command {
      * @throws DazAiException If the deadline details are invalid.
      */
     private void validateDeadline() throws DazAiException {
-        if (startDateTime == null || startDateTime.isEmpty()) {
+        if (fromDateTime == null || fromDateTime.isEmpty()) {
             throw new DazAiException("Invalid deadline format! Use: deadline <desc> /by yyyy-MM-dd HHmm");
         }
     }
@@ -116,6 +120,7 @@ public class AddCommand extends Command {
      */
     @Override
     public boolean isExit() {
+
         return false;
     }
 }

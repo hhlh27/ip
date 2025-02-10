@@ -20,6 +20,7 @@ public class DazAi {
         this.ui = new Ui();
         this.storage = new Storage();
         this.taskList = new TaskList();
+        this.parser = new Parser();
         loadTasksFromStorage();
     }
 
