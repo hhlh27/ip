@@ -1,4 +1,7 @@
 package dazai;
+import java.util.Set;
+import java.util.HashSet;
+import java.util.stream.Collectors;
 
 /**
  * Represents a task with a description and completion status.
@@ -7,7 +10,7 @@ public class Task {
 
     protected String description;
     protected boolean isDone;
-
+    protected Set<String> tags;
     /**
      * Creates a new task with the given description.
      *
@@ -20,6 +23,7 @@ public class Task {
         }
         this.description = description;
         this.isDone = false;
+        this.tags = new HashSet<>();
     }
 
     /**
@@ -71,5 +75,16 @@ public class Task {
     @Override
     public String toString() {
         return "[" + getStatusIcon() + "] " + description;
+    }
+    /**
+     * Adds a tag to the task.
+     *
+     * @param tag The tag to add.
+     */
+    public void addTag(String tag) {
+        tags.add(tag);
+    }
+    public String getTags() {
+        return tags.isEmpty() ? "" : tags.stream().map(tag -> "#" + tag).collect(Collectors.joining(" "));
     }
 }

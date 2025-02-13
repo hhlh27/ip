@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 /**
@@ -15,7 +17,7 @@ public class AddCommand extends Command {
     private final String description;
     private final String fromDateTime; // Used for deadlines and events
     private final String toDateTime;   // Used for events only
-
+    private static final Pattern TAG_PATTERN = Pattern.compile("#(\\w+)");
 
     /**
      * Constructs an AddCommand with the specified task type, description, and dates.
@@ -62,19 +64,33 @@ public class AddCommand extends Command {
      * @throws DazAiException If the task type or parameters are invalid.
      */
     private Task createTask() throws DazAiException {
+        Task task;
         switch (type) {
         case "event":
             validateEvent();
-            return new Event(description, fromDateTime, toDateTime);
+            task = new Event(description, fromDateTime, toDateTime);
+            break;
         case "deadline":
             validateDeadline();
-            return new Deadline(description, fromDateTime);
+            task = new Deadline(description, fromDateTime);
+            break;
         case "todo":
             validateToDo();
-            return new ToDo(description);
+            task = new ToDo(description);
+            break;
         default:
             throw new DazAiException("Invalid task type! Use: event, deadline, or todo.");
+        }
+        addTagsToTask(task);
+        return task;
     }
+    private void addTagsToTask(Task task) {
+        // Find tags in the description using the regex pattern
+        Matcher matcher = TAG_PATTERN.matcher(description);
+        while (matcher.find()) {
+            String tag = matcher.group(1);
+            task.addTag(tag);
+        }
     }
 
     /**
