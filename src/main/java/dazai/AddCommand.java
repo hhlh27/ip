@@ -85,7 +85,7 @@ public class AddCommand extends Command {
         return task;
     }
     private void addTagsToTask(Task task) {
-        // Find tags in the description using the regex pattern
+
         Matcher matcher = TAG_PATTERN.matcher(description);
         while (matcher.find()) {
             String tag = matcher.group(1);
@@ -100,8 +100,6 @@ public class AddCommand extends Command {
      */
     private void validateEvent() throws DazAiException {
         List<String> eventDetails = Arrays.asList(fromDateTime, toDateTime);
-
-        // Use Streams to check if any of the event details are null or empty
         if (eventDetails.stream().anyMatch(s -> s == null || s.isEmpty())) {
             throw new DazAiException("Invalid event format! Use: event <desc> /from yyyy-MM-dd HHmm /to yyyy-MM-dd HHmm");
         }

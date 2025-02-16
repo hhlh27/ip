@@ -3,7 +3,6 @@ package dazai;
 import java.io.IOException;
 
 /**
- * The main class for the DazAi chatbot application.
  * Initializes the required components and manages the main application loop.
  */
 public class DazAi {
@@ -63,7 +62,6 @@ public class DazAi {
     }
 
     /**
-     * The entry point of the application.
      * Creates a new instance of DazAi and starts the chatbot.
      *
      * @param args Command-line arguments (not used).

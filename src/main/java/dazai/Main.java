@@ -9,9 +9,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
-/**
- * A GUI for Duke using FXML.
- */
+
 public class Main extends Application {
 
     private DazAi dazAi = new DazAi();

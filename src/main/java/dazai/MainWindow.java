@@ -7,9 +7,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
-/**
- * Controller for the main GUI.
- */
+
 public class MainWindow extends AnchorPane {
     @FXML
     private ScrollPane scrollPane;
@@ -30,7 +28,7 @@ public class MainWindow extends AnchorPane {
         scrollPane.vvalueProperty().bind(dialogContainer.heightProperty());
     }
 
-    /** Injects the Duke instance */
+
     public void setDazAi(DazAi d) {
         dazAi = d;
     }
@@ -42,7 +40,6 @@ public class MainWindow extends AnchorPane {
     @FXML
     private void handleUserInput() {
         String input = userInput.getText();
-        //Command command = dazAi.parse(input);
         String response = dazAi.getResponse(input);
         dialogContainer.getChildren().addAll(
                 DialogBox.getUserDialog(input, userImage),
