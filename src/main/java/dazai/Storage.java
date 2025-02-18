@@ -72,7 +72,7 @@ public class Storage {
 
     /**
      * Saves the tasks to the storage file.
-     * 
+     *
      * @param tasks The {@link TaskList} of tasks to be saved.
      * @throws IOException If an I/O error occurs while writing to the file.
      */
