@@ -7,6 +7,12 @@ public class Storage {
 
     private static final String FILE_PATH = "./data/dazAI.txt"; // relative path
 
+    /**
+     * Loads tasks from the storage file.
+     *
+     * @return An {@link ArrayList} of {@link Task} objects loaded from the file.
+     * @throws IOException If an I/O error occurs while reading the file.
+     */
     public static ArrayList<Task> loadTasks() throws IOException {
         ArrayList<Task> tasks = new ArrayList<>();
         File file = new File(FILE_PATH);
@@ -64,7 +70,12 @@ public class Storage {
         return tasks;
     }
 
-
+    /**
+     * Saves the tasks to the storage file.
+     * 
+     * @param tasks The {@link TaskList} of tasks to be saved.
+     * @throws IOException If an I/O error occurs while writing to the file.
+     */
 
     public static void saveTasks(TaskList tasks) throws IOException {
         File file = new File(FILE_PATH);
