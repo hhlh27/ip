@@ -19,29 +19,29 @@ public class Parser {
         String commandWord = words[0].toLowerCase();
 
         switch (commandWord) {
-            case "list":
-                return new ListCommand();
-            case "bye":
-                return new ExitCommand();
-            case "todo":
-                return parseTodo(words);
-            case "deadline":
-                return parseDeadline(words);
-            case "event":
-                return parseEvent(words);
-            case "mark":
-                return parseMark(words);
-            case "unmark":
-                return parseUnmark(words);
-            case "delete":
-                return parseDelete(words);
-            case "find":
-                if (words.length < 2 || words[1].trim().isEmpty()) {
-                    throw new DazAiException("Please specify a keyword to search.");
-                }
-                return new FindCommand(words[1].trim());
-            default:
-                throw new DazAiException("I'm sorry, but I don't understand that command.");
+        case "list":
+            return new ListCommand();
+        case "bye":
+            return new ExitCommand();
+        case "todo":
+            return parseTodo(words);
+        case "deadline":
+            return parseDeadline(words);
+        case "event":
+            return parseEvent(words);
+        case "mark":
+            return parseMark(words);
+        case "unmark":
+            return parseUnmark(words);
+        case "delete":
+            return parseDelete(words);
+        case "find":
+            if (words.length < 2 || words[1].trim().isEmpty()) {
+                throw new DazAiException("Please specify a keyword to search.");
+            }
+            return new FindCommand(words[1].trim());
+        default:
+            throw new DazAiException("I'm sorry, but I don't understand that command.");
         }
     }
 

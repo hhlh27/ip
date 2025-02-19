@@ -7,12 +7,6 @@ public class Storage {
 
     private static final String FILE_PATH = "./data/dazAI.txt"; // relative path
 
-    /**
-     * Loads tasks from the storage file.
-     *
-     * @return An {@link ArrayList} of {@link Task} objects loaded from the file.
-     * @throws IOException If an I/O error occurs while reading the file.
-     */
     public static ArrayList<Task> loadTasks() throws IOException {
         ArrayList<Task> tasks = new ArrayList<>();
         File file = new File(FILE_PATH);
@@ -24,50 +18,57 @@ public class Storage {
         try (BufferedReader br = new BufferedReader(new FileReader(file))) {
             String line;
             while ((line = br.readLine()) != null) {
-                String[] taskData = line.split("\\|");
-
-                if (taskData.length < 3) {
-                    System.out.println("Skipping invalid line: " + line);
-                    continue;
+                Task task = parseTaskFromLine(line);
+                if (task != null) {
+                    tasks.add(task);
                 }
-
-                String taskType = taskData[0].trim();
-                boolean isDone = taskData[1].trim().equals("1");
-                String description = taskData[2].trim();
-                Task task = null;
-
-                switch (taskType) {
-                    case "T":
-                        task = new ToDo(description);
-                        break;
-                    case "D":
-                        if (taskData.length < 4) {
-                            System.out.println("Skipping invalid deadline task: " + line);
-                            continue;
-                        }
-                        task = new Deadline(description, taskData[3].trim());
-                        break;
-                    case "E":
-                        if (taskData.length < 5) {
-                            System.out.println("Skipping invalid event task: " + line);
-                            continue;
-                        }
-                        task = new Event(description, taskData[3].trim(), taskData[4].trim());
-                        break;
-                    default:
-                        System.out.println("Skipping unknown task type: " + line);
-                        continue;
-                }
-
-                if (task != null && isDone) {
-                    task.markAsDone();
-                }
-                tasks.add(task);
             }
         } catch (IOException e) {
             throw new IOException("Error loading tasks: " + e.getMessage());
         }
         return tasks;
+    }
+
+    private static Task parseTaskFromLine(String line) {
+        String[] taskData = line.split("\\|");
+        if (taskData.length < 3) {
+            System.out.println("Skipping invalid line: " + line);
+            return null;
+        }
+
+        String taskType = taskData[0].trim();
+        boolean isDone = taskData[1].trim().equals("1");
+        String description = taskData[2].trim();
+        Task task = null;
+
+        switch (taskType) {
+        case "T":
+            task = new ToDo(description);
+            break;
+        case "D":
+            if (taskData.length < 4) {
+                System.out.println("Skipping invalid deadline task: " + line);
+                return null;
+            }
+            task = new Deadline(description, taskData[3].trim());
+            break;
+        case "E":
+            if (taskData.length < 5) {
+                System.out.println("Skipping invalid event task: " + line);
+                return null;
+            }
+            task = new Event(description, taskData[3].trim(), taskData[4].trim());
+            break;
+        default:
+            System.out.println("Skipping unknown task type: " + line);
+            return null;
+        }
+
+        if (task != null && isDone) {
+            task.markAsDone();
+        }
+
+        return task;
     }
 
     /**

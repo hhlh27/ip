@@ -24,8 +24,6 @@ public class AddCommand extends Command {
      *
      * @param type        The type of task (event, deadline, or todo).
      * @param description The description of the task.
-
-=======
      * @param fromDateTime The first date/time parameter (for deadlines and events).
      * @param toDateTime  The second date/time parameter (for events only).
      */
@@ -134,7 +132,6 @@ public class AddCommand extends Command {
      */
     @Override
     public boolean isExit() {
-
         return false;
     }
 }
