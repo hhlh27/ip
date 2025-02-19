@@ -33,8 +33,7 @@ public class TaskList {
      */
     public Task deleteTask(int index) {
         if (index < 0 || index >= tasks.size()) {
-            System.out.println("Invalid task index.");
-            return null;
+            throw new IndexOutOfBoundsException("Invalid task index.");
         }
         return tasks.remove(index);
     }
