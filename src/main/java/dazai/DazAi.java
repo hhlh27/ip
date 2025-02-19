@@ -79,4 +79,8 @@ public class DazAi {
             return "Oops! " + e.getMessage();
         }
     }
+
+    public String showWelcome() {
+        return "Hello I'm DazAi! What can I help you with?";
+    }
 }

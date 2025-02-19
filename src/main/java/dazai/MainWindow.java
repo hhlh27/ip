@@ -19,9 +19,9 @@ public class MainWindow extends AnchorPane {
     private Button sendButton;
 
     private DazAi dazAi;
-
-    private Image userImage = new Image(this.getClass().getResourceAsStream("/images/DaUser.png"));
-    private Image dukeImage = new Image(this.getClass().getResourceAsStream("/images/DaDuke.png"));
+    private Ui ui;
+    private Image userImage = new Image(this.getClass().getResourceAsStream("/images/User.jpeg"));
+    private Image dazImage = new Image(this.getClass().getResourceAsStream("/images/DazAi.jpeg"));
 
     @FXML
     public void initialize() {
@@ -31,6 +31,10 @@ public class MainWindow extends AnchorPane {
 
     public void setDazAi(DazAi d) {
         dazAi = d;
+        dialogContainer.getChildren().addAll(
+                DialogBox.getDazAiDialog(dazAi.showWelcome(), dazImage)
+        );
+
     }
 
     /**
@@ -43,11 +47,12 @@ public class MainWindow extends AnchorPane {
         String response = dazAi.getResponse(input);
         dialogContainer.getChildren().addAll(
                 DialogBox.getUserDialog(input, userImage),
-                DialogBox.getDukeDialog(response, dukeImage)
+                DialogBox.getDazAiDialog(response, dazImage)
         );
         userInput.clear();
 
         if (input.equalsIgnoreCase("bye")) {
+
             System.exit(0); // Close app on "bye" command
         }
     }
