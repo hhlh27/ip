@@ -1,9 +1,9 @@
 # DazAi User Guide
 
 
+![image](https://github.com/user-attachments/assets/ff2e71fa-4387-40c7-abf1-1eeb9b461f41)
 
 
-![image](https://github.com/user-attachments/assets/08c557f9-9365-4dbe-aa85-0ee725ce5cba)
 
 
 Welcome to **DazAi**, your personal assistant chatbot! Duke is designed to help you manage tasks efficiently and interact with ease using simple text commands.
