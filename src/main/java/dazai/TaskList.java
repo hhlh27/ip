@@ -1,7 +1,7 @@
 package dazai;
 
 import java.util.ArrayList;
-import java.util.Collections;
+
 
 /**
  * Represents a list of tasks.
@@ -46,8 +46,7 @@ public class TaskList {
      */
     public Task getTask(int index) {
         if (index < 0 || index >= tasks.size()) {
-            System.out.println("Invalid task index.");
-            return null;
+            throw new IndexOutOfBoundsException("Invalid task index.");
         }
         return tasks.get(index);
     }
@@ -78,4 +77,6 @@ public class TaskList {
     public boolean isEmpty() {
         return tasks.isEmpty();
     }
+
+
 }

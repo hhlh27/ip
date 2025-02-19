@@ -12,12 +12,12 @@ import java.util.regex.Pattern;
  * Represents a command to add a task to the task list.
  */
 public class AddCommand extends Command {
-
+    private static final Pattern TAG_PATTERN = Pattern.compile("#(\\w+)");
     private final String type;
     private final String description;
     private final String fromDateTime; // Used for deadlines and events
     private final String toDateTime;   // Used for events only
-    private static final Pattern TAG_PATTERN = Pattern.compile("#(\\w+)");
+
 
     /**
      * Constructs an AddCommand with the specified task type, description, and dates.
@@ -99,7 +99,8 @@ public class AddCommand extends Command {
     private void validateEvent() throws DazAiException {
         List<String> eventDetails = Arrays.asList(fromDateTime, toDateTime);
         if (eventDetails.stream().anyMatch(s -> s == null || s.isEmpty())) {
-            throw new DazAiException("Invalid event format! Use: event <desc> /from yyyy-MM-dd HHmm /to yyyy-MM-dd HHmm");
+            throw new DazAiException("Invalid event format! Use: " +
+                    "event <desc> /from yyyy-MM-dd HHmm /to yyyy-MM-dd HHmm");
         }
     }
 
@@ -135,3 +136,4 @@ public class AddCommand extends Command {
         return false;
     }
 }
+

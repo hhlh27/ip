@@ -16,7 +16,8 @@ public class MarkCommand extends Command {
      * @param taskIndex The index of the task to mark as done (1-based).
      */
     public MarkCommand(int taskIndex) {
-        this.taskIndex = taskIndex - 1;  // Adjusting the user input to 0-based index
+
+        this.taskIndex = taskIndex - 1;
     }
 
     /**
@@ -40,4 +41,6 @@ public class MarkCommand extends Command {
             throw new DazAiException("Failed to save tasks.");
         }
     }
+
 }
+

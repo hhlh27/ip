@@ -7,9 +7,9 @@ import java.time.format.DateTimeFormatter;
  * Represents a task with a deadline.
  */
 public class Deadline extends Task {
-    private LocalDateTime by;
     private static final DateTimeFormatter INPUT_FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
     private static final DateTimeFormatter OUTPUT_FORMAT = DateTimeFormatter.ofPattern("MMM dd yyyy, h:mm a");
+    private LocalDateTime by;
 
     /**
      * Constructs a Deadline task with the specified description and deadline date.
@@ -41,3 +41,4 @@ public class Deadline extends Task {
         return by.format(INPUT_FORMAT);
     }
 }
+

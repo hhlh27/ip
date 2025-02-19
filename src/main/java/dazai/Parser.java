@@ -86,11 +86,13 @@ public class Parser {
      */
     private static Command parseEvent(String[] words) throws DazAiException {
         if (words.length < 2) {
-            throw new DazAiException("Invalid event format! Use: event <desc> /from yyyy-MM-dd HHmm /to yyyy-MM-dd HHmm");
+            throw new DazAiException("Invalid event format! " +
+                    "Use: event <desc> /from yyyy-MM-dd HHmm /to yyyy-MM-dd HHmm");
         }
         String[] parts = words[1].split(" /from | /to ", 3);
         if (parts.length < 3) {
-            throw new DazAiException("Invalid event format! Use: event <desc> /from yyyy-MM-dd HHmm /to yyyy-MM-dd HHmm");
+            throw new DazAiException("Invalid event format! " +
+                    "Use: event <desc> /from yyyy-MM-dd HHmm /to yyyy-MM-dd HHmm");
         }
         return new AddCommand("event", parts[0].trim(), parts[1].trim(), parts[2].trim());
     }
@@ -137,3 +139,4 @@ public class Parser {
         return new DeleteCommand(Integer.parseInt(words[1].trim()));
     }
 }
+

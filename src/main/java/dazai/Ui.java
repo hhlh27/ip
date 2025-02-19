@@ -1,6 +1,5 @@
 package dazai;
 
-import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
@@ -55,23 +54,6 @@ public class Ui {
             System.out.println(message);
         }
     }
-
-
-    public void showTaskList(Task... tasks) {
-        if (tasks.length == 0) {
-            System.out.println("Your task list is empty.");
-        } else {
-            System.out.println("Here are your tasks:");
-            for (int i = 0; i < tasks.length; i++) {
-                System.out.println((i + 1) + ". " + tasks[i]);
-            }
-        }
-    }
-
-    /**
-     * Displays the goodbye message when the program exits.
-     */
-    public void showByeMessage() {
-        System.out.println("Bye. Hope to see you again soon!");
-    }
 }
+
+

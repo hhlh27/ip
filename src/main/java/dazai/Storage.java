@@ -1,6 +1,11 @@
 package dazai;
 
-import java.io.*;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class Storage {
@@ -84,9 +89,16 @@ public class Storage {
 
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(file))) {
             for (Task task : tasks.getAllTasks()) {
-                String taskType = task instanceof ToDo ? "T" :
-                        task instanceof Deadline ? "D" :
-                                task instanceof Event ? "E" : "?";
+                String taskType;
+                if (task instanceof ToDo) {
+                    taskType = "T";
+                } else if (task instanceof Deadline) {
+                    taskType = "D";
+                } else if (task instanceof Event) {
+                    taskType = "E";
+                } else {
+                    taskType = "?";
+                }
 
                 String status = task.isDone() ? "1" : "0";
                 String description = task.getDescription();
@@ -104,3 +116,4 @@ public class Storage {
         }
     }
 }
+
