@@ -1,10 +1,8 @@
 D | 0 | return book | 2025-02-01 1800
-T | 1 | borrow book
-D | 0 | return book | 2025-09-30 1800
-T | 0 | do assignment
+T | 1 | do assignment
 T | 0 | write essay
-T | 0 | cook lunch
+T | 0 | drop off mail at post office #errand
+E | 0 | attend camp | 2025-02-21 1600 | 2025-02-25 1600
 T | 0 | read book
-T | 0 | read book
-T | 0 | edit document
-T | 0 | finish assignment #hw
+T | 1 | finish essay #urgent
+D | 0 | submit assignment | 2025-03-12 1200
