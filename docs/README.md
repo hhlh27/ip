@@ -106,7 +106,7 @@ Here are your matching tasks:
 
 ### 7. Exiting the Chatbot
 
-Close Duke and save your tasks:
+Close DazAi and save your tasks:
 
 - Command: `bye`
 The chatbot will save your tasks and exit.
