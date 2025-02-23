@@ -6,7 +6,7 @@
 
 
 
-Welcome to **DazAi**, your personal assistant chatbot! Duke is designed to help you manage tasks efficiently and interact with ease using simple text commands.
+Welcome to **DazAi**, your personal assistant chatbot! DazAi is designed to help you manage tasks efficiently and interact with ease using simple text commands.
 ## 1. Adding Tasks
 You can add different types of tasks to DazAi:
 
